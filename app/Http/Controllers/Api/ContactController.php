@@ -20,6 +20,8 @@ class ContactController extends Controller
             'status' => 'new',
         ]);
 
-        return ApiResponseService::success('Your message has been sent successfully.', $message, 201);
+        return ApiResponseService::success('Your message has been sent successfully.', [
+            'message' => $message,
+        ], 201);
     }
 }

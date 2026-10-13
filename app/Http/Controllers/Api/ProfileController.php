@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Services\ApiResponseService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -20,7 +19,6 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request)
     {
         $user = $request->user();
-
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
@@ -32,6 +30,8 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return ApiResponseService::success('Profile updated successfully', ['user' => $user]);
+        return ApiResponseService::success('Profile updated successfully', [
+            'user' => $user,
+        ]);
     }
 }

@@ -31,9 +31,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Subscription::class);
     }
-
-    public function contactMessages()
-    {
-        return $this->hasMany(ContactMessage::class);
-    }
 }

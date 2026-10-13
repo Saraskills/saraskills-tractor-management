@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $demoUser = User::firstOrCreate(
+        User::firstOrCreate(
             ['email' => 'demo@saraskills.com'],
             [
                 'name' => 'SaraSkills Demo',
@@ -76,18 +76,5 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-
-        if (!$demoUser->subscriptions()->exists()) {
-            $demoPlan = Plan::first();
-
-            if ($demoPlan) {
-                $demoUser->subscriptions()->create([
-                    'plan_id' => $demoPlan->id,
-                    'status' => 'active',
-                    'starts_at' => now(),
-                    'ends_at' => now()->addMonth(),
-                ]);
-            }
-        }
     }
 }

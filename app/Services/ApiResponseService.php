@@ -4,7 +4,7 @@ namespace App\Services;
 
 class ApiResponseService
 {
-    public static function success(string $message = 'Operation successful', mixed $data = [], int $status = 200): \Illuminate\Http\JsonResponse
+    public static function success($message = 'Operation successful', $data = [], $status = 200)
     {
         return response()->json([
             'success' => true,
@@ -13,7 +13,7 @@ class ApiResponseService
         ], $status);
     }
 
-    public static function error(string $message = 'Something went wrong', mixed $errors = [], int $status = 400): \Illuminate\Http\JsonResponse
+    public static function error($message = 'Something went wrong', $errors = [], $status = 400)
     {
         return response()->json([
             'success' => false,

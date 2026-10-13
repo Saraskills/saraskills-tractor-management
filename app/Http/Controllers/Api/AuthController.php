@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\StoreRegisterRequest;
+use App\Models\User;
 use App\Services\ApiResponseService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(StoreRegisterRequest $request)
+    public function register(\App\Http\Requests\StoreRegisterRequest $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -23,7 +20,6 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('saraskills-token')->plainTextToken;
-
         Auth::login($user);
 
         return ApiResponseService::success('Registration successful', [
@@ -32,11 +28,9 @@ class AuthController extends Controller
         ], 201);
     }
 
-    public function login(LoginRequest $request)
+    public function login(\App\Http\Requests\LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
-
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return ApiResponseService::error('Invalid login credentials', [], 401);
         }
 
@@ -52,7 +46,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-
         Auth::guard('web')->logout();
 
         return ApiResponseService::success('Logged out successfully');
@@ -60,7 +53,7 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        return ApiResponseService::success('User data retrieved', [
+        return ApiResponseService::success('User retrieved successfully', [
             'user' => $request->user(),
         ]);
     }

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Plan extends Model
 {
@@ -18,12 +17,12 @@ class Plan extends Model
         'sort_order',
     ];
 
-    public function features(): HasMany
+    public function features()
     {
         return $this->hasMany(PlanFeature::class);
     }
 
-    public function subscriptions(): HasMany
+    public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
     }
